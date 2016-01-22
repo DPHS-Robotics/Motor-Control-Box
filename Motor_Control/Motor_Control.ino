@@ -6,7 +6,7 @@ int percentL, percentR;
 int potL, potR;
 String rightOut, leftOut;
 // The following four "min" are the borderline values around "neutral" zone
-const int minRevLeft = 88, minRevRight = 88, minFwdLeft = 100, minFwdRight = 99;
+const int minRevLeft = 88, minRevRight = 87, minFwdLeft = 100, minFwdRight = 99;
 Servo Right;
 Servo Left;
 
