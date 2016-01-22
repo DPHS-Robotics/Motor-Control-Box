@@ -5,6 +5,8 @@
 int percentL, percentR;
 int potL, potR;
 String rightOut, leftOut;
+// The following four "min" are the borderline values around "neutral" zone
+const int minRevLeft = 88, minRevRight = 88, minFwdLeft = 100, minFwdRight = 99;
 Servo Right;
 Servo Left;
 
@@ -35,9 +37,13 @@ void setup() {
   lcd.setBacklightPin(BACKLIGHT_PIN,POSITIVE);
   lcd.on();
   lcd.setCursor(0, 0);
-  lcd.print("Left:  ");
+  lcd.print("L spd:");
   lcd.setCursor(0, 1);
-  lcd.print("Right: ");
+  lcd.print("R spd:");
+  lcd.setCursor(0, 2);
+  lcd.print("L raw:");
+  lcd.setCursor(0, 3);
+  lcd.print("R raw:");
 }
 
 void loop() {
@@ -47,38 +53,44 @@ void loop() {
   percentR = map(potR, 1023, 0, 50, 140);
   rightOut = "";
   leftOut = "";
-  if (percentL <= 88)
+  if (percentL <= minRevLeft)
   {
-    leftOut += (map(percentL, 88, 50, 0, 100));
+    leftOut += (map(percentL, minRevLeft, 50, 0, 100));
     leftOut += ("%rev  ");
   }
-  else if (percentL >= 100)
+  else if (percentL >= minFwdLeft)
   {
-    leftOut += (map(percentL, 100, 140, 0, 100));
+    leftOut += (map(percentL, minFwdLeft, 140, 0, 100));
     leftOut += ("%fwd  ");
   }
   else
   {
     leftOut += ("neutral");
   }
-  if (percentR <= 88)
+  if (percentR <= minRevRight)
   {
-    rightOut += (map(percentR, 88, 50, 0, 100));
+    rightOut += (map(percentR, minRevRight, 50, 0, 100));
     rightOut += ("%rev  ");
   }
-  else if (percentR >= 100)
+  else if (percentR >= minFwdRight)
   {
-    rightOut += (map(percentR, 100, 140, 0, 100));
+    rightOut += (map(percentR, minFwdRight, 140, 0, 100));
     rightOut += ("%fwd  ");
   }
   else
   {
     rightOut += ("neutral");
   }
-  lcd.setCursor(7, 0);
+  lcd.setCursor(8, 0);
   lcd.print(leftOut);
-  lcd.setCursor(7, 1);
+  lcd.setCursor(8, 2);
+  lcd.print(percentL);
+  lcd.print(" ");
+  lcd.setCursor(8, 1);
   lcd.print(rightOut);
+  lcd.setCursor(8, 3);
+  lcd.print(percentR);
+  lcd.print(" ");
   Left.write(percentL);
   Right.write(percentR);
 }
