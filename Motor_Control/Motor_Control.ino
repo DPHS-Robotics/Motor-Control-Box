@@ -12,7 +12,7 @@ Servo Left;
 
 // LCD stuff
 #define I2C_ADDR    0x27  // Define I2C Address where the PCF8574A is
-#define BACKLIGHT_PIN     3
+#define BACKLIGHT_PIN  3
 #define En_pin  2
 #define Rw_pin  1
 #define Rs_pin  0
